@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <!-- Styles -->
         <style>
             html, body {
@@ -62,6 +62,51 @@
                 margin-bottom: 30px;
             }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+         <script>
+         $(document).ready(function() { 
+             $('#tokenform').submit(function(e){ 
+                e.preventDefault();
+              $.ajax({
+                type: 'post',
+                url: 'api/getToken',
+                data: {                    
+                    'email': $('#email_address').val(),   
+                    'password': $('#password').val()
+                },
+  
+                success: function(data) {
+                    obj = JSON.parse(data);
+                    localStorage.token = obj.token;
+                   console.log(localStorage.token); 
+                }
+              });
+            });
+            });
+          
+           $(document).ready(function() { 
+             $('#getData').submit(function(e){ 
+                
+                e.preventDefault();
+              $.ajax({
+                type: 'get',                
+                 url: 'api/getData',
+                headers: {
+                    'Authorization': 'Bearer '+localStorage.token,
+                    'Access-Control-Allow-Origin': '*'
+                },
+                
+                success: function(data) {
+                  console.log(data); //console the elements of data
+                   if(data) {
+                        
+                  }
+                }
+              });
+            });
+            });
+          </script>
+          </script>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -81,18 +126,82 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Clinic Ferry Zemrak
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    Log in with email <b>zlindgren@yahoo.com</b> and password <b>Tap!M3d1cal</b> and then pull data into database
+
+            <form class="form-horizontal" id="tokenform" role="form"  >
+
+            {{ csrf_field() }}
+            <div class='form-row'>
+
+                <!--div class='col-xs-12 form-group name required'>
+
+                    <label class='control-label'>Name</label>
+
+                    <input id="name" autocomplete='off' class='form-control name' size='20' type='text' name="name">
+
+                </div-->
+            </div>
+
+            <div class='form-row'>
+
+                <div class='col-xs-12 form-group city required'>
+
+                    <label class='control-label'>Email Address</label>
+
+                    <input id="email_address" autocomplete='off' class='form-control email_address' size='20' type='text' name="email_address">
+
                 </div>
+            </div>
+
+           
+            <div class='form-row'>
+
+                <div class='col-xs-12 form-group phone required'>
+
+                    <label class='control-label'>Password</label>
+
+                    <input id="password" autocomplete='off' class='form-control password' size='20' type='password' name="password">
+
+                </div>
+
+            </div>
+
+          
+            
+            
+            <div class='form-row'>
+
+                <div class='col-md-12 form-group'>
+                    <button class='form-control btn btn-success submit-button' type='submit'>Log In</button>
+
+                </div>
+
+            </div>
+
+            
+            </form>
+
+            <form class="form-horizontal" id="getData" role="form"  >
+
+            
+            
+            <div class='form-row'>
+
+                <div class='col-md-12 form-group'>
+                    <button class='form-control btn btn-success submit-button' type='submit'>Store Data into DB</button>
+
+                </div>
+
+            </div>
+
+            
+            </form>
+                </div>
+
             </div>
         </div>
     </body>
