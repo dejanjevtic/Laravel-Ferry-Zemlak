@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 
@@ -53,6 +54,35 @@ class HomeController extends Controller
        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); 
        $result = curl_exec($ch); 
        curl_close($ch); 
-       return $result;        
+       $yummy =json_decode($result, true);    
+
+        $array = $yummy['data'];   // return $array;
+        //$row=$array[0];
+         //return $row['clinic'];
+        foreach($array as $row)
+        {
+            
+    //         foreach ($yummy as $obj)  {
+    //     foreach ($obj as $key) {
+    //         return $key;
+    //     }
+        
+    // }
+    //return $row["specialty"];
+        //$row["specialty"]="dkmkedke";
+
+            DB::table('appointment')->insert([
+                                //'id'      => $row["id"],
+                                'datetime'   => $row["datetime"],
+                                'status'      => json_encode($row["status"]),
+                                'patient'       => json_encode($row["patient"]),
+                                'doctor'       => json_encode($row["doctor"]),
+                                'clinic'       => json_encode($row["clinic"]),
+                                'specialty'       => json_encode($row["specialty"])
+            ]);
+            //DB::table('appointment')->insert(array( 'status'=>'cool', 'specialty' => 1 ));
+            //Appointment::create(['specialty' => 1]);
+        }
+       return 'OK';  
     }
 }
