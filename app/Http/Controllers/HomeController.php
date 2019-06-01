@@ -57,31 +57,22 @@ class HomeController extends Controller
        $yummy =json_decode($result, true);    
 
         $array = $yummy['data'];   // return $array;
-        //$row=$array[0];
-         //return $row['clinic'];
-        foreach($array as $row)
-        {
-            
-    //         foreach ($yummy as $obj)  {
-    //     foreach ($obj as $key) {
-    //         return $key;
-    //     }
         
-    // }
-    //return $row["specialty"];
-        //$row["specialty"]="dkmkedke";
-
-            DB::table('appointment')->insert([
-                                //'id'      => $row["id"],
-                                'datetime'   => $row["datetime"],
-                                'status'      => json_encode($row["status"]),
-                                'patient'       => json_encode($row["patient"]),
-                                'doctor'       => json_encode($row["doctor"]),
-                                'clinic'       => json_encode($row["clinic"]),
-                                'specialty'       => json_encode($row["specialty"])
-            ]);
-            //DB::table('appointment')->insert(array( 'status'=>'cool', 'specialty' => 1 ));
-            //Appointment::create(['specialty' => 1]);
+        foreach($array as $row)
+        {            
+    
+            if($row["status"]!='cancelled'){
+                DB::table('appointment')->insert([
+                                    //'id'      => $row["id"],
+                                    'datetime'   => $row["datetime"],
+                                    'status'      => json_encode($row["status"]),
+                                    'patient'       => json_encode($row["patient"]),
+                                    'doctor'       => json_encode($row["doctor"]),
+                                    'clinic'       => json_encode($row["clinic"]),
+                                    'specialty'       => json_encode($row["specialty"])
+                ]);
+            }
+            
         }
        return 'OK';  
     }
