@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('getToken', 'HomeController@getToken');
 Route::get('getData', 'HomeController@getData');
+Route::get('getData2/{id}/{headers}', 'HomeController@getData2');

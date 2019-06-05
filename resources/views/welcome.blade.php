@@ -92,20 +92,27 @@
                 type: 'get',                
                  url: 'api/getData',
                 headers: {
-                    'Authorization': 'Bearer '+localStorage.token,
+                    'Authorization': 'Bearer ' + localStorage.token,
                     'Access-Control-Allow-Origin': '*'
                 },
                 
                 success: function(data) {
                   console.log(data); //console the elements of data
                    if(data) {
+
+                        for (i = 1; i < data; i++) {
+                        var gvt ="<a id='getData2' href='api/getData2/"+ i + "/" + localStorage.token + "'" +">"+ i + "</a><br>" ;
+                        //var gvt ="<a id='getData2' name='"+ i +"'>" + i + "</a><br>" ;
                         
+                            $("ol").append(gvt);
+                        }
                   }
                 }
               });
             });
             });
-          </script>
+
+            
           </script>
     </head>
     <body>
@@ -185,24 +192,67 @@
             
             </form>
 
-            <form class="form-horizontal" id="getData" role="form"  >
-
-            
+            <form class="form-horizontal" id="getData" role="form"  >            
             
             <div class='form-row'>
 
                 <div class='col-md-12 form-group'>
                     <button class='form-control btn btn-success submit-button' type='submit'>Store Data into DB</button>
 
+                </div>                
+
+            </div>
+            
+            </form>
+
+            <form class="form-horizontal" id="getDataPerDay" role="form"  >            
+            
+            <div class='form-row'>
+
+                <div class='col-md-12 form-group'>
+                    <button class='form-control btn btn-success submit-button' type='submit'>Store Data into DB once per day</button>
+
+                </div>                
+
+            </div>
+            
+            </form>
+
+            <form class="form-horizontal" id="getDataMonth" role="form"  >            
+            
+            <div class='form-row'>
+
+                <div class='col-md-12 form-group'>
+                    <button class='form-control btn btn-success submit-button' type='submit'>Store Data into DB one month advance</button>
+
+                </div>                
+
+            </div>
+
+            <div class='form-row'>
+
+                <div class='col-md-12 form-group'>                    
+                        <ol>  
+                        </ol>
+                </div>                
+
+            </div>
+            
+            </form>
+
+           
+
+
+
+            
+
+                
                 </div>
+
 
             </div>
 
             
-            </form>
-                </div>
-
-            </div>
         </div>
     </body>
 </html>
